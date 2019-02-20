@@ -1,5 +1,4 @@
 export class LocalFilter {
-
   protected static FILTER = (value: string, search: string) => {
     return value.toString().toLowerCase().includes(search.toString().toLowerCase());
   }
@@ -8,7 +7,17 @@ export class LocalFilter {
     const filter: Function = customFilter ? customFilter : this.FILTER;
 
     return data.filter((el) => {
-      const value = typeof el[field] === 'undefined' || el[field] === null ? '' : el[field];
+      // Holds the data
+      let data: any = el;
+      // Split the property string
+      const propertyList: string[] = field.split(".");
+
+      // Access inner properties
+      for(const property of propertyList) {
+        data = data[property];
+      }
+
+      const value = typeof data === 'undefined' || data === null ? '' : data;
       return filter.call(null, value, search);
     });
   }
