@@ -18,7 +18,7 @@ export class LocalFilter {
       }
 
       const value = typeof data === 'undefined' || data === null ? '' : data;
-      return filter.call(null, value, search);
+      return filter.call(null, value, search, el);
     });
   }
 }
